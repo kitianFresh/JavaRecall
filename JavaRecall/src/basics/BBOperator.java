@@ -1,4 +1,4 @@
-package operators;
+package basics;
 
 public class BBOperator {
 	public static void main(String[] args) {

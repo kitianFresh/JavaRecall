@@ -1,4 +1,4 @@
-package objects;
+package basics;
 
 
 public class MethodParameter {
