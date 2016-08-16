@@ -18,5 +18,17 @@ public class BBOperator {
 		//System.out.println(~f);
 		//System.out.println(~g);
 		//System.out.println(~h);
+		//使用三目运算符反转一个boolean
+		h = h ? false : true;
+		System.out.println(h);
+		//使用!也可以
+		h = !h;
+		System.out.println(h);
+		//h = !e;！无法用在integer和real以及object reference上，只能用在boolean上
+		Integer i = null;
+		if (!(i==null)) {
+			
+		}
+		//h = !null;
 	}
 }
