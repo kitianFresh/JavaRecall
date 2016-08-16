@@ -6,4 +6,4 @@ pick up my java
 
   2. 使用三目运算符反转一个boolean,！无法用在integer和real以及object reference上，只能用在boolean上
 
-  3.only integers(byte,char,short,int,long) can use bitwise operator
+  3. only integers(byte,char,short,int,long) can use bitwise operator
