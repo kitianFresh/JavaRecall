@@ -23,3 +23,41 @@ pick up my java
     - 类实例可以调用一切静态方法
   4. 实例从new中产生，必定由构造函数构造出;
   5. 类实例的初始化不管时成员初始化private a = 3;还是{}代码块初始化，实际上都是按照在代码中出现的先后顺序被插入到构造函数最前面；
+  
+### interface && inheritance
+#### interface
+  1. 接口定义中可以包含method signatures, default methods, static methods and constant definitions. 其中default and static methods.需要给出具体实现；constant默认就是public static，并且只能是。所有方法默认都是public，且只能时public；
+  2. 实现某接口的类必须实现该接口的所有方法；当需要扩展接口而又不想更改实现该接口的所有子类代码，两种方法：第一，定义一个新接口继承自该接口，添加新方法；第二，使用default method添加新方法；
+  3. An interface name can be used anywhere a type can be used.
+  4. 继承一个接口，实现新接口时，default method的三种方式
+    - Not mention the default method at all, which lets your extended interface inherit the default method.
+    - Redeclare the default method, which makes it abstract.
+    - Redefine the default method, which overrides it.
+#### inheritance
+  1.当父类或者父接口们提供了相同的方法，java compiler遵循一下原则:
+    - Instance methods are preferred over interface default methods.
+    - Methods that are already overridden by other candidates are ignored. 
+    - two or more independently defined default methods conflict, or a default method conflicts with an abstract method, then the Java compiler produces a compiler error. You must explicitly override the supertype methods.
+    
+#### object 几大常用方法
+比较打印克隆类信息
+  1. protected Object clone() throws CloneNotSupportedException
+      Creates and returns a copy of this object.
+  2. public boolean equals(Object obj)
+      Indicates whether some other object is "equal to" this one.
+  3. protected void finalize() throws Throwable
+      Called by the garbage collector on an object when garbage
+      collection determines that there are no more references to the object
+  4. public final Class getClass()
+      Returns the runtime class of an object.
+  5. public int hashCode()
+      Returns a hash code value for the object.
+  6. public String toString()
+      Returns a string representation of the object.
+同步方法
+  1. public final void notify()
+  2. public final void notifyAll()
+  3. public final void wait()
+  4. public final void wait(long timeout)
+  5. public final void wait(long timeout, int nanos)
+  
