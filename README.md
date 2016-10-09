@@ -60,4 +60,3 @@ pick up my java
   3. public final void wait()
   4. public final void wait(long timeout)
   5. public final void wait(long timeout, int nanos)
-  
