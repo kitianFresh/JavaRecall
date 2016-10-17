@@ -60,3 +60,27 @@ pick up my java
   3. public final void wait()
   4. public final void wait(long timeout)
   5. public final void wait(long timeout, int nanos)
+  
+### Java CLASSPATH
+#### 当运行的java文件不含package指令
+&emsp;&emsp;当java文件不含package指令，都处于当前工作目录src下面时，使用javac XXX.java && java XXX没有任何问题；因为classloader默认从当前目录开始寻找名叫XXX的类，可以找到；
+#### 当出现package指令的时候
+
+&emsp;&emsp;加入有package strategy;指令，那么也就是XXX.java文件在src/strategy目录下面,此时，还使用以上命令就会出现Error: Could not find or load main class XXX，为什么？因为带包之后，被编译的XXX.java已经不叫XXX了，包的作用就是名字空间，类名已经是strategy.XXX了，不是XXX；你可以通过javap -verbose XXX.class来查看他的类名；
+
+&emsp;&emsp;那么是不是就是在当前目录src/strategy下面使用java strategy.XXX就可以了？还是出现Error: Could not find or load main class strategy.XXX。What！！！这又是为什么？？因为classloader对于类名foo.bar.XXX这种形式，默认是在当前目录下搜索foo/bar/XXX.class文件来加载，虽然他的类名其实是foo.bar.XXX;而当前目录src/foo/bar下面没有一个foo/bar/XXX.class;同理，你现在在src/strategy工作目录下面，也找不到叫strategy/XXX.class的文件，就失败了；解决方法很简单，到达顶层包所在的目录src，然后再使用java strategy.XXX就可以了，当然你也到达其他目录(比如src/strategy)，加上classpath，java -cp %src_parent%/src strategy.XXX
+
+#### 参考
+  1. [Error: Could not find or load main class](http://javarevisited.blogspot.com/2015/04/error-could-not-find-or-load-main-class-helloworld-java.html)
+  2. [How to Set Classpath for Java on Windows and Linux](http://javarevisited.blogspot.sg/2011/01/how-classpath-work-in-java.html)
+
+### 设计模式
+#### 策略模式strategy pattern
+##### 原则
+  1. 封装变化，找出可能变化的部分；
+  2. 多用组合（has-a），少用继承（is-a）；
+  3. 对接口编程，不针对实现编程；
+
+#### 模式
+&emsp;&emsp;策略模式： 定义算法族，分别分装起来，让他们之间可以相互替换，此模式让算法的变化独立于使用算法的客户。
+&emsp;&emsp;OOP中，我们一般会把实体抽象成对象，实体的状态和行为就抽象为成员变量和成员函数；但是，在策略模式中，为了解决复用性和迎合需求变化，我们把行为也抽象成一个接口，再将具体行为封装成实现行为接口的类，以数据成员的形式放入实体中，可以使得实体能动态改变行为；
