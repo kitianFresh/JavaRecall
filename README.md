@@ -103,4 +103,35 @@ pick up my java
 
 #### 模式
 &emsp;&emsp;观察者模式： 在对象之间定义一对多的依赖关系，一旦单个对象状态发生变化，依赖他的对象都会收到通知，并自动更新状态。
+
 &emsp;&emsp;典型的是subject-subscribe模型，消息订阅模型，消息更新，订阅者自动获得更新；实际上java中还有swing的监听器也是观察者模型，比如一个JButton就是一个被观察者，你可以addLinstener来添加观察者（监听器），一旦事件发生，被观察者就通知监听器，监听器就做相应处理；java.util中内置了观察者模型，包括observable类和observer接口
+
+#### 装饰器模式 decorator pattern
+#### 原则
+  1. 封装变化，找出可能变化的部分；
+    - 装饰器模式中，被装饰者的行为除了基本行为，其他行为灵活多变，例如饮料的配料种类繁多可加可不加
+  2. 多用组合（has-a）和委托（delegate）， 少用继承（is-a）；
+    - 装饰者委托被装饰者完成某项任务返回（相当于一层层函数调用），这样被装饰者就只关注于核心功能，其他的可变修饰交给装饰器（如饮料加入各种调料），当然前提是装饰器和被装饰者拥有同样的超类才能完成装饰过程和委托过程
+  3. 针对接口编程，不针对具体实现编程；
+  4. 为交互对象之间的松耦合设计而努力；
+  5. 对扩展开放，对修改关闭；
+  
+#### 模式
+&emsp;&emsp;装饰器模式：动态地将责任附加到对象上，要想扩展功能，装饰器提供了有别于继承的另一种选择。
+
+&emsp;&emsp;继承虽然也是提供扩展的方式之一，但是他有时候并不是最佳方案！因为继承是静态的扩展功能，在代码层面复用了代码。 而组合和委托却可以在运行时动态加上新的行为！
+
+&emsp;&emsp;JavaIO中的各种输入输出流就是装饰器的典范。例如：
+```
+InputStream
+    FileInputStream(组件)
+    StringBufferInputStream(组件)
+    ByteArrayInputStream(组件)
+    FilterInputStream（抽象装饰器）
+        PushbackInputStream（装饰器）
+        BufferedInputStream（装饰器）
+        DataInputStream（装饰器）
+        LineNumberInputStream（装饰器）
+```
+    - 
+
