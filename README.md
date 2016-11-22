@@ -76,9 +76,9 @@ pick up my java
   1. [Error: Could not find or load main class](http://javarevisited.blogspot.com/2015/04/error-could-not-find-or-load-main-class-helloworld-java.html)
   2. [How to Set Classpath for Java on Windows and Linux](http://javarevisited.blogspot.sg/2011/01/how-classpath-work-in-java.html)
 
-### 设计模式
-#### 策略模式strategy pattern
-##### 原则
+## 设计模式
+### 策略模式strategy pattern
+#### 原则
   1. 封装变化，找出可能变化的部分；
     - 策略模式将将来可能变化的行为(如鸭子会飞和不会飞)定义成一个接口
   2. 多用组合（has-a），少用继承（is-a）；
@@ -96,7 +96,7 @@ pick up my java
 &emsp;&emsp;策略模式： 定义**算法族，分别封装起来，让他们之间可以相互替换**，此模式让算法的变化独立于使用算法的客户。
 &emsp;&emsp;OOP中，我们一般会把实体抽象成对象，实体的状态和行为就抽象为成员变量和成员函数；但是，在策略模式中，为了解决复用性和迎合需求变化，我们把**行为也抽象成一个接口**，再将**具体行为封装成实现行为接口的类，以数据成员的形式放入实体中，可以使得实体能动态改变行为**；
 
-#### 观察者模式observer pattern
+### 观察者模式observer pattern
 #### 原则
   1. 封装变化，找出可能变化的部分；
     - 观察者模式中，被观察者状态是变化的，在他之中注册的观察者数量可以变化
@@ -114,7 +114,7 @@ pick up my java
 
 &emsp;&emsp;典型的是subject-subscribe模型，消息订阅模型，消息更新，订阅者自动获得更新；实际上java中还有swing的监听器也是观察者模型，比如一个JButton就是一个被观察者，你可以addListener来添加观察者（监听器），一旦事件发生，被观察者就通知监听器，监听器就做相应处理；java.util中内置了观察者模型，包括observable类和observer接口
 
-#### 装饰器模式 decorator pattern
+### 装饰器模式 decorator pattern
 #### 原则
   1. 封装变化，找出可能变化的部分；
     - 装饰器模式中，被装饰者的行为除了基本行为，其他行为灵活多变，例如饮料的配料种类繁多可加可不加
@@ -147,5 +147,21 @@ InputStream
         DataInputStream（装饰器）
         LineNumberInputStream（装饰器）
 ```
-    - 
 
+### 工厂模式 factory pattern
+
+#### 1. factory method pattern
+
+#### 原则
+  1. 依赖倒置原则（Dependency Inversion Principle）
+   - 依赖抽象而不是依赖具体类。
+
+#### 类图
+![factory](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/factory/factory.jpg)
+
+#### 模式
+&emsp;&emsp;工厂方法模式： 定义了一个创建对象的接口，但由子类决定要实例化的类是哪一个。工厂方法让类把实例化推迟到子类。
+
+&emsp;&emsp;Product和Creator之间是解耦的。Creator实现所有操纵Product的方法，但是不实现工厂方法，他有一个protected abstract factoryMethod()；继承自Creator的ConcreteCreator生产实际的继承自Product的ConcreteProduct。
+
+&emsp;&emsp;典型的是subject-subscribe模型，消息订阅模型，消息更新，订阅者自动获得更新；实际上java中还有swing的监听器也是观察者模型，比如一个JButton就是一个被观察者，你可以addListener来添加观察者（监听器），一旦事件发生，被观察者就通知监听器，监听器就做相应处理；java.util中内置了观察者模型，包括observable类和observer接口
