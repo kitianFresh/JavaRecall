@@ -89,6 +89,9 @@ pick up my java
   3. 对接口编程，不针对实现编程；
     - 策略模式中我们只要协商好fly接口，就只用针对接口编程，例如抽象鸭子类不用管怎么飞，只需要知道鸭子的飞行属性有飞行接口方法就行。
 
+#### 类图
+![strategymodel](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/strategy/strategymodel.jpg)
+
 ##### 模式
 &emsp;&emsp;策略模式： 定义**算法族，分别封装起来，让他们之间可以相互替换**，此模式让算法的变化独立于使用算法的客户。
 &emsp;&emsp;OOP中，我们一般会把实体抽象成对象，实体的状态和行为就抽象为成员变量和成员函数；但是，在策略模式中，为了解决复用性和迎合需求变化，我们把**行为也抽象成一个接口**，再将**具体行为封装成实现行为接口的类，以数据成员的形式放入实体中，可以使得实体能动态改变行为**；
@@ -102,6 +105,9 @@ pick up my java
   3. 针对接口编程，不针对具体实现编程；
     - 观察者利用被观察者接口register向被观察者注册，而被观察者利用观察者接口update通知观察者更新数据
   4. 为交互对象之间的松耦合设计而努力；
+
+#### 类图
+![observermodel](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/observer/observermodel.jpg)
 
 #### 模式
 &emsp;&emsp;观察者模式： 在对象之间定义一对多的依赖关系，一旦单个对象状态发生变化，依赖他的对象都会收到通知，并自动更新状态。
@@ -117,6 +123,12 @@ pick up my java
   3. 针对接口编程，不针对具体实现编程；
   4. 为交互对象之间的松耦合设计而努力；
   5. 对扩展开放，对修改关闭；
+
+#### 类图
+![decoratormodel](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/decorator/decoratormodel.jpg)
+
+#### 序列图
+![decoratorseq](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/decorator/decoratorseq.jpg)
   
 #### 模式
 &emsp;&emsp;装饰器模式：动态地将责任附加到对象上，要想扩展功能，装饰器提供了有别于继承的另一种选择。
