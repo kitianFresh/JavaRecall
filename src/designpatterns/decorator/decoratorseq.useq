@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.12" icons="true" automaticImage="JPEG">  
+  <object id="1" language="java" name="designpatterns.decorator.StarbuzzCoffee" project="JavaRecall" 
+    file="/JavaRecall/src/designpatterns/decorator/StarbuzzCoffee.java" binary="false" label="starbuzzCoffee" 
+    type="class" autoSize="true">    
+    <position height="-1" width="-1" x="161" y="0"/>    
+    <execution id="2">      
+      <position height="54" width="111" x="5" y="141"/>    
+    </execution>  
+  </object>  
+  <object id="5" language="java" name="designpatterns.decorator.Whip" project="JavaRecall" 
+    file="/JavaRecall/src/designpatterns/decorator/Whip.java" binary="false" label="whip" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="295" y="0"/>    
+    <execution id="4">      
+      <position height="18" width="110" x="120" y="159"/>    
+    </execution>    
+    <execution id="6">      
+      <position height="54" width="110" x="120" y="177"/>    
+    </execution>  
+  </object>  
+  <object id="9" language="java" name="designpatterns.decorator.Mocha" project="JavaRecall" 
+    file="/JavaRecall/src/designpatterns/decorator/Mocha.java" binary="false" label="mocha" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="372" y="0"/>    
+    <execution id="8">      
+      <position height="18" width="110" x="234" y="195"/>    
+    </execution>    
+    <execution id="10">      
+      <position height="54" width="110" x="234" y="213"/>    
+    </execution>  
+  </object>  
+  <object id="13" language="java" name="designpatterns.decorator.Soy" project="JavaRecall" 
+    file="/JavaRecall/src/designpatterns/decorator/Soy.java" binary="false" label="soy" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="525" y="0"/>    
+    <execution id="12">      
+      <position height="18" width="110" x="348" y="231"/>    
+    </execution>    
+    <execution id="14">      
+      <position height="54" width="110" x="348" y="249"/>    
+    </execution>  
+  </object>  
+  <object id="17" language="java" name="designpatterns.decorator.HouseBlend" project="JavaRecall" 
+    file="/JavaRecall/src/designpatterns/decorator/HouseBlend.java" binary="false" label="houseBlend" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="580" y="0"/>    
+    <execution id="16">      
+      <position height="18" width="110" x="462" y="267"/>    
+    </execution>  
+  </object>  
+  <message id="3" operation="cost():double" asynchronous="false">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="4"/>  
+  </message>  
+  <message id="7" operation="cost():double" asynchronous="false">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="8"/>  
+  </message>  
+  <message id="11" operation="cost():double" asynchronous="false">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </message>  
+  <message id="15" operation="cost():double" asynchronous="false">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="16"/>  
+  </message>
+</sequence-diagram>
