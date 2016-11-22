@@ -33,6 +33,7 @@ pick up my java
     - Not mention the default method at all, which lets your extended interface inherit the default method.
     - Redeclare the default method, which makes it abstract.
     - Redefine the default method, which overrides it.
+
 #### inheritance
   1.当父类或者父接口们提供了相同的方法，java compiler遵循一下原则:
     - Instance methods are preferred over interface default methods.
@@ -54,6 +55,7 @@ pick up my java
       Returns a hash code value for the object.
   6. public String toString()
       Returns a string representation of the object.
+
 同步方法
   1. public final void notify()
   2. public final void notifyAll()
@@ -78,7 +80,7 @@ pick up my java
 #### 策略模式strategy pattern
 ##### 原则
   1. 封装变化，找出可能变化的部分；
-    - 策略模式将将来可能变化的行为(如鸭子会飞和不会飞)成一个接口
+    - 策略模式将将来可能变化的行为(如鸭子会飞和不会飞)定义成一个接口
   2. 多用组合（has-a），少用继承（is-a）；
     - 策略模式将不同鸭子的飞行行为封装成一个类，并成为鸭子成员
     - 不是采用继承（虽然也可以复用代码，但是却造成没有飞行能力的鸭子飞行），一旦需求改变(如有不会飞的鸭子)，要更改大量代码，当然你可以选择不会飞的鸭子出现时fly()中什么也不做，但是这不是一个好习惯
@@ -104,7 +106,7 @@ pick up my java
 #### 模式
 &emsp;&emsp;观察者模式： 在对象之间定义一对多的依赖关系，一旦单个对象状态发生变化，依赖他的对象都会收到通知，并自动更新状态。
 
-&emsp;&emsp;典型的是subject-subscribe模型，消息订阅模型，消息更新，订阅者自动获得更新；实际上java中还有swing的监听器也是观察者模型，比如一个JButton就是一个被观察者，你可以addLinstener来添加观察者（监听器），一旦事件发生，被观察者就通知监听器，监听器就做相应处理；java.util中内置了观察者模型，包括observable类和observer接口
+&emsp;&emsp;典型的是subject-subscribe模型，消息订阅模型，消息更新，订阅者自动获得更新；实际上java中还有swing的监听器也是观察者模型，比如一个JButton就是一个被观察者，你可以addListener来添加观察者（监听器），一旦事件发生，被观察者就通知监听器，监听器就做相应处理；java.util中内置了观察者模型，包括observable类和observer接口
 
 #### 装饰器模式 decorator pattern
 #### 原则

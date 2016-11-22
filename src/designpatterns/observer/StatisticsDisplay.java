@@ -1,4 +1,4 @@
-package designpattern.observer;
+package designpatterns.observer;
 
 public class StatisticsDisplay implements Observer, DisplayElement{
 	private float temperature;
