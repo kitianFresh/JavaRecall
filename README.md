@@ -164,4 +164,19 @@ InputStream
 
 &emsp;&emsp;Product和Creator之间是解耦的。Creator实现所有操纵Product的方法，但是不实现工厂方法，他有一个protected abstract factoryMethod()；继承自Creator的ConcreteCreator生产实际的继承自Product的ConcreteProduct。
 
-&emsp;&emsp;典型的是subject-subscribe模型，消息订阅模型，消息更新，订阅者自动获得更新；实际上java中还有swing的监听器也是观察者模型，比如一个JButton就是一个被观察者，你可以addListener来添加观察者（监听器），一旦事件发生，被观察者就通知监听器，监听器就做相应处理；java.util中内置了观察者模型，包括observable类和observer接口
+#### 2. abstract factory pattern
+
+#### 原则
+  1. 依赖倒置原则（Dependency Inversion Principle）
+   - 依赖抽象而不是依赖具体类
+   
+#### 类图
+![abstractfactory](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/abstractfactory/abstractfactory.jpg)
+
+![abstractfactory-digram](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/abstractfactory/abstractfactory-digram.jpg)
+
+#### 模式
+&emsp;&emsp;抽象工厂方法模式： 提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。
+
+
+&emsp;&emsp;针对抽象编程，而不是针对具体类编程。**工厂方法使用继承：把对象的创建委托给子类，子类实现工厂方法来创建对象**。**抽象工厂使用对象组合：对象的创建被实现在工厂接口所暴露出来的方法中**。
