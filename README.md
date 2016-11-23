@@ -92,7 +92,7 @@ pick up my java
 #### 类图
 ![strategymodel](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/strategy/strategymodel.jpg)
 
-##### 模式
+#### 模式
 &emsp;&emsp;策略模式： 定义**算法族，分别封装起来，让他们之间可以相互替换**，此模式让算法的变化独立于使用算法的客户。
 &emsp;&emsp;OOP中，我们一般会把实体抽象成对象，实体的状态和行为就抽象为成员变量和成员函数；但是，在策略模式中，为了解决复用性和迎合需求变化，我们把**行为也抽象成一个接口**，再将**具体行为封装成实现行为接口的类，以数据成员的形式放入实体中，可以使得实体能动态改变行为**；
 
@@ -173,7 +173,7 @@ InputStream
 #### 类图
 ![abstractfactory](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/abstractfactory/abstractfactory.jpg)
 
-![abstractfactory-digram](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/abstractfactory/abstractfactory-digram.jpg)
+![abstractfactory-digram](https://github.com/kitianFresh/JavaRecall/blob/master/src/designpatterns/abstractfactory/abstractfactory-digram.png)
 
 #### 模式
 &emsp;&emsp;抽象工厂方法模式： 提供一个接口，用于创建相关或依赖对象的家族，而不需要明确指定具体类。
