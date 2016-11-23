@@ -180,3 +180,78 @@ InputStream
 
 
 &emsp;&emsp;针对抽象编程，而不是针对具体类编程。**工厂方法使用继承：把对象的创建委托给子类，子类实现工厂方法来创建对象**。**抽象工厂使用对象组合：对象的创建被实现在工厂接口所暴露出来的方法中**。
+
+### 单件模式
+#### 原则
+#### 模式
+&emsp;&emsp;单件模式：确保一个类只有一个实例，并提供全局访问点。
+
+#### 单件模式的编程范式:
+  1. 私有化构造器，private Singleton(){},因为不能有多个实例；这就导致需要一个public全局访问点来实例化一个类，并且一定是static方法，因为调用他的时候这个类的实例还没有出生，因此只能是static方法。
+  2. 自我管理，需要有一个静态变量 private static Singleton uniqueInstance，因为需要维护全局唯一的状态；private是因为不能被共享，static是因为他需要实例出生之前就存在。
+  3. 全局访问点，public static Singleton getInstance(){}。
+  
+#### 单件模式演化史
+
+线程不安全版本
+```java
+public class Singleton1 {
+	//自我管理
+	private static Singleton1 uniqueInstance = null;
+	private Singleton1() {}
+	public static Singleton1 getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new Singleton1();
+		}
+		return uniqueInstance;
+	}
+}
+```
+安全低性能版
+```java
+public class Singleton2 {
+	// 自我管理
+	private static Singleton2 uniqueInstance = null;
+	private Singleton2() {}
+	// 线程安全，但是性能不好，因为每一次getInstance都要枷锁解锁,
+	// 对于频繁使用getInstance的程序，性能急剧下降
+	public static synchronized Singleton2 getInstance() {
+		if (uniqueInstance == null) {
+			uniqueInstance = new Singleton2();
+		}
+		return uniqueInstance;
+	}
+}
+```
+类加载器eager版本
+```java
+public class Singleton3 {
+	// 借助虚拟机类加载器在加载的时候就创建出类实例（eagerly），即使并未使用，以后就不用再检查是否非空了 
+	// 但是，当你的程序中使用多个类加载器加载同一个类时候，还是有可能出现多个实例的，
+	// 因此此版本只适用于没哟多个类加载器加载同一个类的情况
+	private static Singleton3 uniqueInstance = new Singleton3();
+	private Singleton3() {}
+	public static Singleton3 getInstance() {
+		return uniqueInstance;
+	}
+}
+```
+终极安全高性能版本（double check）
+```java
+public class Singleton4 {
+	private volatile static Singleton4 uniqueInstance = null;
+	private Singleton4() {}
+	// 终极方法，double check法！只有在第一次实例化时会枷锁检查，以后就不用了
+	public static Singleton4 getInstance() {
+		if (uniqueInstance == null) {
+			synchronized (Singleton4.class) {
+				if (uniqueInstance == null) {
+					uniqueInstance = new Singleton4();
+				}
+			}
+		}
+		return uniqueInstance;
+	}
+	
+}
+```
