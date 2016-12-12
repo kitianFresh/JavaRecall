@@ -76,6 +76,180 @@ pick up my java
   1. [Error: Could not find or load main class](http://javarevisited.blogspot.com/2015/04/error-could-not-find-or-load-main-class-helloworld-java.html)
   2. [How to Set Classpath for Java on Windows and Linux](http://javarevisited.blogspot.sg/2011/01/how-classpath-work-in-java.html)
 
+## Advance
+### Collection
+#### Collection 遍历的同时修改其结构（大小等而不是值）
+ 1. for-each,但此时是不能修改集合结构的，否则抛出 java.util.ConcurrentModificationException
+ ```
+ for (Integer d : data) {
+			if (d == 5) {
+				System.out.println("remove: " + d);
+				data.remove(d);
+			}
+ }
+ ```
+ 2. 使用 Iterator 遍历，就可以在遍历的同时修改其结构了；但是当并发访问时，还是会失败;
+ ```
+ for (Iterator<Integer> it = data.iterator(); it.hasNext(); ) {
+	        if (it.next() == 4) {
+	        	it.remove();
+	        	System.out.println("remove: " + 4);
+	        }
+ }
+ ```
+上述现象产生的原因就是，在Collection内部都有一个Iterator，Iterator会对集合的结构做检查，如果发现和预期不符合，就会跑出异常。对于 for-each，实际上还是调用了Iterator获取每一个元素，但是没有调用Iterator的add或者remove方法，因此跑出了异常。以下源码就可以看出来，Itr.remove完成之后，会进行expectedModCount = modCount;操作，从而防止抛出异常，而如果直接调用collection的add remove，他会进行 modCount++；然而Itr里的expectedModCount并没有跟着变，因此在获取下一个元素的时候就check失败了
+```java
+private class Itr implements Iterator<E> {
+        int cursor;       // index of next element to return
+        int lastRet = -1; // index of last element returned; -1 if no such
+        int expectedModCount = modCount;
+
+        public boolean hasNext() {
+            return cursor != size;
+        }
+
+        @SuppressWarnings("unchecked")
+        public E next() {
+            checkForComodification();
+            int i = cursor;
+            if (i >= size)
+                throw new NoSuchElementException();
+            Object[] elementData = ArrayList.this.elementData;
+            if (i >= elementData.length)
+                throw new ConcurrentModificationException();
+            cursor = i + 1;
+            return (E) elementData[lastRet = i];
+        }
+
+        public void remove() {
+            if (lastRet < 0)
+                throw new IllegalStateException();
+            checkForComodification();
+
+            try {
+                ArrayList.this.remove(lastRet);
+                cursor = lastRet;
+                lastRet = -1;
+                expectedModCount = modCount;
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public void forEachRemaining(Consumer<? super E> consumer) {
+            Objects.requireNonNull(consumer);
+            final int size = ArrayList.this.size;
+            int i = cursor;
+            if (i >= size) {
+                return;
+            }
+            final Object[] elementData = ArrayList.this.elementData;
+            if (i >= elementData.length) {
+                throw new ConcurrentModificationException();
+            }
+            while (i != size && modCount == expectedModCount) {
+                consumer.accept((E) elementData[i++]);
+            }
+            // update once at end of iteration to reduce heap write traffic
+            cursor = i;
+            lastRet = i - 1;
+            checkForComodification();
+        }
+
+        final void checkForComodification() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+        }
+}
+
+```
+ 3. 如果在遍历的时候，还需要添加元素呢？你会发现data.iterator()返回的Iterator是没有add方法的！非常奇怪。而data.listIterator()是有的，这个ListIterator含有add，remove，set方法！
+ - Methods of Iterator:
+   * hasNext()
+   * next()
+   * remove()
+ - Methods of ListIterator:
+   * add(E e)
+   * hasNext()
+   * hasPrevious()
+   * next()
+   * nextIndex()
+   * previous()
+   * previousIndex()
+   * remove()
+   * set(E e)
+```java
+/**
+     * An optimized version of AbstractList.ListItr
+     */
+    private class ListItr extends Itr implements ListIterator<E> {
+        ListItr(int index) {
+            super();
+            cursor = index;
+        }
+
+        public boolean hasPrevious() {
+            return cursor != 0;
+        }
+
+        public int nextIndex() {
+            return cursor;
+        }
+
+        public int previousIndex() {
+            return cursor - 1;
+        }
+
+        @SuppressWarnings("unchecked")
+        public E previous() {
+            checkForComodification();
+            int i = cursor - 1;
+            if (i < 0)
+                throw new NoSuchElementException();
+            Object[] elementData = ArrayList.this.elementData;
+            if (i >= elementData.length)
+                throw new ConcurrentModificationException();
+            cursor = i;
+            return (E) elementData[lastRet = i];
+        }
+
+        public void set(E e) {
+            if (lastRet < 0)
+                throw new IllegalStateException();
+            checkForComodification();
+
+            try {
+                ArrayList.this.set(lastRet, e);
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        public void add(E e) {
+            checkForComodification();
+
+            try {
+                int i = cursor;
+                ArrayList.this.add(i, e);
+                cursor = i + 1;
+                lastRet = -1;
+                expectedModCount = modCount;
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
+    }
+```
+ 4. 注意使用Iterator的时候，对set,add,remove等的调用一定不能混合，在it.next或者it.previous后立马操作，如果不立即操作，例如，set之前add了一下，那么操作的元素就错了
+
+#### Collection 并发访问修改
+解决单线程遍历同时修改结构，那么如何防止对Collection的并发修改异常？因为Iterator并不保证并发，显然是同步枷锁了，但是枷锁粒度最好不要太细，否则很容易出错，直接加在for 循环外面。
+
+#### 参考
+ - [ConcurrentModificationException](https://docs.oracle.com/javase/7/docs/api/java/util/ConcurrentModificationException.html)
+
 ## 设计模式
 ### 策略模式strategy pattern
 #### 原则
