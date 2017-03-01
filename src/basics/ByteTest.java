@@ -24,5 +24,20 @@ public class ByteTest {
 		System.out.println(b);
 		
 		System.out.println(MAGIC);
+		
+		double d1 = 0.33;
+		double d2 = 4.00;
+		System.out.println("d1: " + d1);
+		System.out.println("d2: " + d2);
+		d1 = (long)d1^(long)d2;
+		d2 = (long)d1^(long)d2;
+		d1 = (long)d2^(long)d1;
+		
+		System.out.println("d1: " + d1);
+		System.out.println("d2: " + d2);
+		boolean b1 = true;
+		boolean b2 = false;
+		boolean bb = b1 & b2;
+		System.out.println("bb: " + bb);
 	}
 }

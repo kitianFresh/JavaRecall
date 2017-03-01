@@ -6,7 +6,7 @@ pick up my java
 
   2. 使用三目运算符或者!可以反转一个boolean,！无法用在integer和real以及object reference上，只能用在boolean上
 
-  3. only integers(byte,char,short,int,long) can use bitwise operator
+  3. except boolean, only integers(byte,char,short,int,long) can use bitwise operator
 
 ### static blocks && class initialize && instance initialize
 
@@ -53,7 +53,9 @@ pick up my java
       Returns the runtime class of an object.
   5. public int hashCode()
       Returns a hash code value for the object.
-  6. public String toString()
+  6. public boolean equals()
+  
+  7. public String toString()
       Returns a string representation of the object.
 
 同步方法
@@ -97,7 +99,7 @@ pick up my java
 	        }
  }
  ```
-上述现象产生的原因就是，在Collection内部都有一个Iterator，Iterator会对集合的结构做检查，如果发现和预期不符合，就会跑出异常。对于 for-each，实际上还是调用了Iterator获取每一个元素，但是没有调用Iterator的add或者remove方法，因此跑出了异常。以下源码就可以看出来，Itr.remove完成之后，会进行expectedModCount = modCount;操作，从而防止抛出异常，而如果直接调用collection的add remove，他会进行 modCount++；然而Itr里的expectedModCount并没有跟着变，因此在获取下一个元素的时候就check失败了
+上述现象产生的原因就是，在Collection内部都有一个Iterator，Iterator会对集合的结构做检查，如果发现和预期不符合，就会抛出异常。对于 for-each，实际上还是调用了Iterator获取每一个元素，但是没有调用Iterator的add或者remove方法，因此抛出了异常。以下源码就可以看出来，Itr.remove完成之后，会进行expectedModCount = modCount;操作，从而防止在checkForComodification()时抛出异常，而如果直接调用collection的add remove，他会进行 modCount++；然而Itr里的expectedModCount并没有跟着变，因此在获取下一个元素的时候就check失败了
 ```java
 private class Itr implements Iterator<E> {
         int cursor;       // index of next element to return
